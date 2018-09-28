@@ -4,70 +4,156 @@
  * and open the template in the editor.
  */
 
-/* 
+/*
  * File:   BinaryTree.cpp
  * Author: jhdra
- * 
+ *
  * Created on 20 de Setembro de 2018, 16:48
  */
 
 #include <stdlib.h>
 #include <iostream>
 #include <list>
-#include <vector>
-#include <unordered_map>
+#include <string>
 #include "BinaryTree.h"
 
-using namespace BinaryTree;
+using namespace std;
 
 BinaryTree::BinaryTree() {
     root = NULL;
-    cont_nodes = 0;
 }
 
-BinaryTree::BinaryTree(char root_v) {
-    root = createNode();
-    root->value = root_v;
-    cont_nodes = 1;
+BinaryTree::BinNode_t* BinaryTree::createNode(char value) {
+    BinNode_t *temp = (BinNode_t*)malloc(sizeof(BinNode_t));
+    temp->value = value;
+    temp->left = NULL;
+    temp->right = NULL;
+    return temp;
 }
 
-BinaryTree::BinNode_t* BinaryTree::dfs(char value, BinNode_t* arvore) {
+bool BinaryTree::add_node(std::string input){
+    BinNode_t* node;
+    int len = input.size();
+    if(len == 1)
+        return false;
+    if(root != NULL){
+        list<BinNode_t*> fila;
+        BinNode_t *aux;
+        //Marca a raiz como visitada
+        fila.push_back(root);
+        while(!fila.empty()){
+            aux = fila.front();
+            fila.pop_front();
+            if(aux->value == input[0]){
+                node = aux;
+                break;
+            }
+            if(aux->left != NULL){
+                fila.push_back(aux->left);
+            }
+            if(aux->right != NULL){
+                fila.push_back(aux->right);
+            }
+        }
+    }
+    else{
+        root = createNode(input[0]);
+        node = root;
+    }
+    if(len >= 3)
+        node->left = createNode(input[2]);
+    if(len == 5)
+        node->right = createNode(input[4]);
+    return true;
+}
+
+BinaryTree::BinNode_t* BinaryTree::get_root(){
+    return root;
+}
+
+BinaryTree::BinNode_t* BinaryTree::dfs(char value) {
+    /*//implementa��o recursiva
     if(arvore == NULL)
         return NULL;
-    puts(arvore->value);
+    cout << arvore->value << ' ';
     if(arvore->value == value)
         return arvore;
-    BinNode_t *l = bfs(value, arvore->left);
+    BinaryTree::BinNode_t *l = BinaryTree::dfs(value, arvore->left);
     if(l != NULL)
         return l;
-    BinNode_t *r = bfs(value, arvore->right);
+    BinNode_t *r = dfs(value, arvore->right);
     if(r != NULL)
-        return *r;
+        return r;
+    return NULL;
+    /*/
+    if(root == NULL)
+        return NULL;
+    //fila do BFS
+    list<BinNode_t*> fila;
+    BinNode_t *aux;
+    //Marca a raiz como visitada
+    fila.push_front(root);
+    cout << "DFS: ";
+    while(!fila.empty()){
+        aux = fila.front();
+        cout << aux->value << " ";
+        fila.pop_front();
+        if(aux->value == value){
+            cout << endl;
+            return aux;
+        }
+        if(aux->right != NULL){
+            fila.push_front(aux->right);
+        }
+        if(aux->left != NULL){
+            fila.push_front(aux->left);
+        }
+    }
+    cout << endl;
     return NULL;
 }
 
 BinaryTree::BinNode_t* BinaryTree::bfs(char value) {
-//    list<char> fila;
-//    vector<char, bool> visitados[cont_nodos];
-//    int cont_v = 0;
-//    visitados[tree->value] = true;
-//    while(!fila.empty()){
-//    }
+    if(root == NULL)
+        return NULL;
+    //fila do BFS
+    list<BinNode_t*> fila;
+    BinNode_t *aux;
+    //Marca a raiz como visitada
+    fila.push_back(root);
+    cout << "BFS: ";
+    while(!fila.empty()){
+        aux = fila.front();
+        cout << aux->value << " ";
+        fila.pop_front();
+        if(aux->value == value){
+            cout << endl;
+            return aux;
+        }
+        if(aux->left != NULL){
+            fila.push_back(aux->left);
+        }
+        if(aux->right != NULL){
+            fila.push_back(aux->right);
+        }
+    }
+    cout << endl;
+    return NULL;
 }
 
-BinaryTree::BinNode_t* BinaryTree::print_father(char son, BinNode_t *nodo) {
-    if(nodo == NULL)
+BinaryTree::BinNode_t* BinaryTree::print_father(char son, BinNode_t *node) {
+    if(node == NULL)
         return NULL;
-    if(nodo->left != NULL && nodo->left-> == son){
-        printf("%c\n", nodo->value);
-        return nodo;
+    if(node->left != NULL && node->left->value == son){
+        cout << "O pai de " << son << " eh " << node->value << endl;
+        return node;
     }
-    else if(nodo->right != NULL && nodo->right == son){
-        printf("%c\n", nodo->value);
-        return nodo;
+    else if(node->right != NULL && node->right->value == son){
+        cout << "O pai de " << son << " eh "<< node->value << endl;
+        return node;
     }else{
-        BinNode_t* aux1 = print_father(son, nodo->left);
-        BinNode_t* aux2 = print_father(son, nodo->right);
+        BinNode_t* aux1 = print_father(son, node->left);
+        BinNode_t* aux2 = print_father(son, node->right);
         if(aux1 != NULL)
             return aux1;
         if(aux2 == NULL)
@@ -76,75 +162,56 @@ BinaryTree::BinNode_t* BinaryTree::print_father(char son, BinNode_t *nodo) {
     }
 }
 
-void BinaryTree::print_brothers(char value, BinNode_t *nodo) {
-    if(nodo == NULL)
+void BinaryTree::print_brothers(char value, BinNode_t *node) {
+    if(node == NULL)
         return;
-    if(nodo->left != NULL && nodo->left-> == value){
-        if(nodo->right != NULL)
-            printf("%c\n", nodo->value);
+    if(node->left != NULL && node->left->value == value){
+        if(node->right != NULL)
+            cout << "O irmao de " << value << " eh " << node->right->value << endl;
         else
-            puts("Não possui irmão");
+            cout << value << " nao possui irmao" << endl;
     }
-    else if(nodo->right != NULL && nodo->right == value){
-        printf("%c\n", nodo->value);
-        if(nodo->left != NULL)
-            printf("%c\n", nodo->value);
+    else if(node->right != NULL && node->right->value == value){
+        cout << node->value << endl;
+        if(node->left != NULL)
+            cout << "O irmao de " << value << " eh " << node->left->value << endl;
         else
-            puts("Não possui irmão");
+            cout << value << " nao possui irmao" << endl;
     }else{
-        print_father(value, nodo->left);
-        print_father(value, nodo->right);
+        print_brothers(value, node->left);
+        print_brothers(value, node->right);
     }
 }
 
 void BinaryTree::print_ancestors(char value) {
-    BinNode_t *aux;
-    while(aux != root){
+    //BinNode_t *aux;
+    while(value != root->value){
         BinNode_t* p = print_father(value, root);
         value = p->value;
     }
 }
 
-void BinaryTree::print_descendents(BinNode_t *father) {
+void BinaryTree::print_descendents_n(BinNode_t *father) {
+    if(father == NULL)
+        cout << "Fim descendentes!" << endl;
     if(father->left != NULL){
-        printf("%c ", father->left->value);
-        print_descendents(father->left);
+        cout << father->left->value << " ";
+        print_descendents_n(father->left);
     }
     if(father->right != NULL){
-        printf("%c ", father->right->value);
-        print_descendents(father->right);
+        cout << father->right->value << " ";
+        print_descendents_n(father->right);
     }
+}
+
+void BinaryTree::print_descendents(char father){
+    print_descendents_n(bfs(father));
 }
 
 void BinaryTree::print_uncles(BinNode_t *me) {
     char v_father = print_father(me->value, root)->value;
     print_brothers(v_father, root);
 }
-
-BinaryTree::BinNode_t* BinaryTree::createNode() {
-    BinNode_t *temp = malloc(sizeof(BinNode_t));
-    temp->value = '\0';
-    temp->left = NULL;
-    temp->right = NULL;
-    return temp;
-}
-
-BinaryTree::BinNode_t* BinaryTree::get_root() {
-    return root;
-}
-
-bool BinaryTree::add_node(char father, char son_left, char son_right) {
-    BinNode_t *aux = dfs(father, root);
-    if(son_left != NULL || son_left != '\0'){
-        aux->left = createNode();
-        aux->left->value = son_left;
-    }
-    if(son_right != NULL || son_right != '\0'){
-        aux->right = createNode();
-        aux->right->value = son_left;
-    }
-}
-
 
 BinaryTree::~BinaryTree() {
 }

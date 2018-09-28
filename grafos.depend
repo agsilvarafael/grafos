@@ -1,0 +1,29 @@
+# depslib dependency file v1.0
+1537883517 source:/run/media/jeronimo/DADOS/Documentos/GitHub/grafos/main.cpp
+	<iostream>
+	<stdio.h>
+
+1537885965 source:/run/media/jeronimo/DADOS/Documentos/GitHub/grafos/BinaryTree.cpp
+	<stdlib.h>
+	<iostream>
+	<list>
+	<string.h>
+	"BinaryTree.h"
+
+1537886017 /run/media/jeronimo/DADOS/Documentos/GitHub/grafos/BinaryTree.h
+	<string>
+
+1537984299 source:d:\documentos\github\grafos\binarytree.cpp
+	<stdlib.h>
+	<iostream>
+	<list>
+	<string>
+	"BinaryTree.h"
+
+1537973202 d:\documentos\github\grafos\binarytree.h
+
+1537984346 source:d:\documentos\github\grafos\main.cpp
+	<iostream>
+	<fstream>
+	"BinaryTree.h"
+
