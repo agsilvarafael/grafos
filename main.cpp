@@ -23,12 +23,12 @@ using namespace std;
 int main() {
     BinaryTree bt;
     string line;
-    ifstream myfile ("entrada.txt"); // ifstream = padrão ios:in
+    ifstream myfile ("entrada.txt"); // ifstream = padrï¿½o ios:in
     if (myfile.is_open())
     {
         while (! myfile.eof() ) //enquanto end of file for false continua
         {
-            // como foi aberto em modo texto(padrão) e não binário(ios::bin) pega cada linha
+            // como foi aberto em modo texto(padrï¿½o) e nï¿½o binï¿½rio(ios::bin) pega cada linha
             getline (myfile,line);
             cout << line << endl;
             bt.add_node(line);
@@ -37,10 +37,10 @@ int main() {
     }
     else cout << "Unable to open file";
 
-    bt.print_father('F', bt.get_root());
-    bt.print_brothers('F', bt.get_root());
-    bt.print_brothers('I', bt.get_root());
-    //bt.print_descendents('A');
+    bt.print_father('F');
+    bt.print_brothers('F');
+    bt.print_brothers('I');
+    bt.print_descendents('A');
     bt.dfs('G');
     bt.bfs('G');
     return 0;

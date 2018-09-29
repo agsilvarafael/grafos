@@ -27,17 +27,16 @@ public:
     virtual ~BinaryTree();
     BinNode_t* dfs(char value);//busca em profundidade
     BinNode_t* bfs(char value);//busca em largura
-    void print_descendents_n(BinNode_t *father);//imprime os descendentes do nó
-    void print_descendents(char father);
-    BinNode_t* print_father(char son, BinNode_t *node);//imprime o pai do nó
-    void print_uncles(BinNode_t *me);//imprime os tios do nó
-    void print_brothers(char value, BinNode_t *nodo);//imprime o pai do nó
+    void print_descendents(char father);//imprime os descendentes do nó
+    void print_father(char son);//imprime o pai do nó
+    void print_uncles(char value);//imprime os tios do nó
+    void print_brothers(char value);//imprime o pai do nó
     void print_ancestors(char value);//imprime os ancestrais do nó
     bool add_node(std::string input);//
     BinNode_t* get_root();
 private:
-    BinNode_t* createNode(char value);
     BinNode_t* root;
+    BinNode_t* createNode(char value);
 };
 
 #endif /* BINARYTREE_H */
