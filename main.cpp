@@ -40,8 +40,10 @@ int main() {
     bt.print_father('F');
     bt.print_brothers('F');
     bt.print_brothers('I');
+    bt.print_uncles('E');
+    bt.print_ancestors('I');
     bt.print_descendents('A');
-    bt.dfs('G');
+    bt.dfs('D');
     bt.bfs('G');
     return 0;
 }

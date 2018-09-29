@@ -89,11 +89,11 @@ BinaryTree::BinNode_t* BinaryTree::dfs(char value) {
             cout << endl;
             return aux;
         }
-        if(aux->right != NULL){
-            fila.push_front(aux->right);
-        }
         if(aux->left != NULL){
             fila.push_front(aux->left);
+        }
+        if(aux->right != NULL){
+            fila.push_front(aux->right);
         }
     }
     cout << endl;
@@ -128,11 +128,11 @@ BinaryTree::BinNode_t* BinaryTree::bfs(char value) {
     return NULL;
 }
 
-void BinaryTree::print_father(char son) {
+void BinaryTree::print_father(char value) {
     if(root == NULL)
-        return NULL;
-    if(root->value == son)
-        cout << son << " nao possui pai" << endl;
+        return ;
+    if(root->value == value)
+        cout << value << " nao possui pai" << endl;
     //fila do BFS
     list<BinNode_t*> fila;
     BinNode_t *aux;
@@ -142,27 +142,27 @@ void BinaryTree::print_father(char son) {
         aux = fila.front();
         fila.pop_front();
         if(aux->right != NULL){
-            if(aux->right->value == son){
+            if(aux->right->value == value){
                 break;
             }
             fila.push_front(aux->right);
         }
         if(aux->left != NULL){
-            if(aux->left->value == son){
+            if(aux->left->value == value){
                 break;
             }
             fila.push_front(aux->left);
         }
     }
     if(fila.empty())
-        cout << son << " nao pertence a arvore" << endl;
+        cout << value << " nao pertence a arvore" << endl;
     else
-        cout << "PAI: O pai de " << son << " eh "<< aux->value << endl;
+        cout << "PAI: O pai de " << value << " eh "<< aux->value << endl;
 }
 
 void BinaryTree::print_brothers(char value) {
     if(root == NULL)
-        return NULL;
+        return ;
     //fila do BFS
     list<BinNode_t*> fila;
     BinNode_t *aux;
@@ -199,42 +199,47 @@ void BinaryTree::print_brothers(char value) {
 void BinaryTree::print_ancestors(char value) {
     cout << "ANTECEDENTES(" << value << "):";
     if(root == NULL)
-        return NULL;
+        return ;
     if(root->value == value)
-        cout << value << " nao possui antecedentes" << endl;
+        cout << ' ' << value << " nao possui antecedentes" << endl;
     //fila do BFS
-    list<BinNode_t*> fila;
+    list<BinNode_t*> fila, f2;
     BinNode_t *aux;
     //Marca a raiz como visitada
     fila.push_front(root);
     while(!fila.empty()){
         aux = fila.front();
-        if(aux->value == value)
-            break;
+        fila.pop_front();
+        f2.push_front(aux);
         if(aux->right != NULL){
+            if(aux->right->value == value){
+                aux = aux->right;
+                break;
+            }
             fila.push_front(aux->right);
         }
         if(aux->left != NULL){
+            if(aux->left->value == value){
+                aux = aux->left;
+                break;
+            }
             fila.push_front(aux->left);
         }
     }
-    if(fila.empty()){
-        cout << value << " nao pertence a arvore" << endl;
-    }else{
-        while(!fila.empty()){
-            if( (fila.front()->left != NULL && fila.front()->left == aux) ||
-                (fila.front()->right != NULL && fila.front()->right == aux)
-            ){
-                cout << ' ' << fila.front()->value;
-                aux = fila.front();
-            }
-            fila.pop_front();
+    while(!f2.empty()){
+        if( (f2.front()->left != NULL && f2.front()->left == aux) ||
+            (f2.front()->right != NULL && f2.front()->right == aux)
+        ){
+            cout << ' ' << f2.front()->value;
+            aux = f2.front();
         }
+        f2.pop_front();
     }
+    cout << endl;
 }
 
 
-void BinaryTree::print_descendents(char father){
+void BinaryTree::print_descendents(char value){
     if(root == NULL)
         cout << "Árvore invélida" << endl;
     //Controle de impressão
@@ -251,7 +256,7 @@ void BinaryTree::print_descendents(char father){
         if(print){
             cout << aux->value << " ";
         }
-        else if(aux->value == father){
+        else if(aux->value == value){
             print = true;
         }
         if(aux->left != NULL){
@@ -267,7 +272,7 @@ void BinaryTree::print_descendents(char father){
 void BinaryTree::print_uncles(char value) {
     cout << "TIO: ";
     if(root == NULL)
-        return NULL;
+        return ;
     if(root->value == value)
         cout << value << " nao possui antecedentes" << endl;
     //fila do BFS
