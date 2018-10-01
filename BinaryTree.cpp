@@ -258,6 +258,7 @@ void BinaryTree::print_descendents(char value){
         }
         else if(aux->value == value){
             print = true;
+			fila.clear();
         }
         if(aux->left != NULL){
             fila.push_back(aux->left);
