@@ -36,7 +36,13 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/BinaryTree.o \
-	${OBJECTDIR}/main.o
+	${OBJECTDIR}/Fila.o \
+	${OBJECTDIR}/Graph.o \
+	${OBJECTDIR}/Lista.o \
+	${OBJECTDIR}/Mapa.o \
+	${OBJECTDIR}/Pilha.o \
+	${OBJECTDIR}/exercicio1.o \
+	${OBJECTDIR}/trabalho1.o
 
 
 # C Compiler Flags
@@ -68,10 +74,40 @@ ${OBJECTDIR}/BinaryTree.o: BinaryTree.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/BinaryTree.o BinaryTree.cpp
 
-${OBJECTDIR}/main.o: main.cpp
+${OBJECTDIR}/Fila.o: Fila.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
+	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Fila.o Fila.cpp
+
+${OBJECTDIR}/Graph.o: Graph.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Graph.o Graph.cpp
+
+${OBJECTDIR}/Lista.o: Lista.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Lista.o Lista.cpp
+
+${OBJECTDIR}/Mapa.o: Mapa.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Mapa.o Mapa.cpp
+
+${OBJECTDIR}/Pilha.o: Pilha.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Pilha.o Pilha.cpp
+
+${OBJECTDIR}/exercicio1.o: exercicio1.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/exercicio1.o exercicio1.cpp
+
+${OBJECTDIR}/trabalho1.o: trabalho1.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/trabalho1.o trabalho1.cpp
 
 # Subprojects
 .build-subprojects:
