@@ -17,6 +17,19 @@
 
 using namespace std;
 
+struct structLista{
+        struct structVertice* v;
+        int peso;
+        struct structLista * proximo;
+    };
+typedef struct structLista ListaAdjacentes;
+
+struct structVertice{
+    char* nome;
+    ListaAdjacentes* listaAdjacentes;
+};
+typedef struct structVertice Vertice;
+
 /*
  * 
  */
@@ -25,4 +38,3 @@ int main(int argc, char** argv) {
     
     return 0;
 }
-
